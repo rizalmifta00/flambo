@@ -43,3 +43,24 @@ enum Role{
   CUSTOMER
   ADMIN
 }
+
+model categories{
+  id String @id @default(uuid())
+  name String @db.VarChar(100)
+  sub_category sub_category[]
+}
+
+model sub_category{
+  id String @id @default(uuid())
+  categoryId String
+  category categories @relation(fields: [categoryId],references: [id])
+  name String
+  sub_child sub_child[]
+}
+model sub_child{
+  id String @id @default(uuid())
+  subCategoryId String
+  sub_category sub_category @relation(fields: [subCategoryId],references:[id])
+  name String
+
+}
