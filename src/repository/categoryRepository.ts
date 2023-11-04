@@ -1,12 +1,12 @@
 import prisma from '../db'
 
 
-const getAllCategory = async ()=>{
+export const findCategory = async ()=>{
     const category = await prisma.categories.findMany();
     return category;
 }
 
-const findCategoryById =async (id:string) => {
+export const findCategoryById =async (id:string) => {
     const category = await prisma.categories.findUnique({
         where : {
             id,
@@ -14,3 +14,4 @@ const findCategoryById =async (id:string) => {
     });
     return category;
 }
+
