@@ -26,3 +26,15 @@ export const createCategory =async (categoryData:any) => {
     });
     return category;
 }
+
+export const updateCategory =async (id:string,categoryData : any) => {
+    const category = await prisma.categories.update({
+        where:{
+            id : id,
+        },
+        data :{
+            name :categoryData.name
+        },
+    });
+    return category;
+}
