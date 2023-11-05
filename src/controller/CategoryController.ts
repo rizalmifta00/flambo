@@ -1,6 +1,6 @@
 import express from 'express'
 import type { Request,Response } from 'express';
-import { getAllCategory,getCategoryById,createCategory,updateCategory } from "../service/categoryService";
+import { getAllCategory,getCategoryById,createCategory,updateCategory,deleteCategory } from "../service/categoryService";
 import { createSuccesfull } from './BaseResponse';
 const router = express.Router();
 
@@ -49,5 +49,15 @@ router.put("/:id",async(req:Request,res:Response)=>{
    }catch(err : any){
     res.status(400).send(err.message);
    }
+})
+router.delete("/:id",async (req:Request,res:Response) => {
+    try{
+        const categoryId = req.params.id;
+        const category = await deleteCategory(categoryId);
+        const response = createSuccesfull("success","success delete data", category);
+        res.send(response);
+    }catch(err : any){
+        res.status(400).send(err.message);
+    }
 })
 export default router
