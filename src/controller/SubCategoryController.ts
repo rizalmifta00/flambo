@@ -48,5 +48,16 @@ router.put("/:id",async (req:Request,res:Response) => {
     }
     
 })
+router.delete("/:id",async (req:Request,res:Response) => {
+    try{
+        const id = req.params.id;
+        const subCategory = await subCategoryService.deleteSubCategory(id);
+        const response = createSuccesfull("success","success delete data" , subCategory);
+        res.status(200).send(response);
+    }catch(err : any){
+        res.status(500).send(err.message);
+    }
+    
+})
 
 export default router;

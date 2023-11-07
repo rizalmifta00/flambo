@@ -48,3 +48,12 @@ export const updateSubCategory = async (id:string,subCategoryData:any) => {
     });
     return subCategory;
 }
+export const deleteSubCategory =async (id:string) => {
+    const subCategory = await prisma.sub_category.delete({
+        where : {
+            id : id,
+        },
+    });
+    return subCategory;
+    
+}
