@@ -30,3 +30,21 @@ export const createSubCategory = async (subCategoryData:any) => {
     return subCategory;
     
 }
+
+export const updateSubCategory = async (id:string,subCategoryData:any) => {
+    const subCategory = await prisma.sub_category.update({
+        where : {
+            id : id,
+        },
+        data : {
+            name : subCategoryData.name,
+            category : {
+                connect : {
+                    id :  subCategoryData.categoryId,
+                },
+            }
+        }
+
+    });
+    return subCategory;
+}

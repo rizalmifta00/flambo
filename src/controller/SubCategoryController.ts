@@ -36,4 +36,17 @@ router.post("/",async (req:Request,res:Response) => {
     
 })
 
+router.put("/:id",async (req:Request,res:Response) => {
+    try{
+        const id = req.params.id;
+        const data = req.body;
+        const subCategory = await subCategoryService.updateSubCategory(id,data);
+        const response = createSuccesfull("success","success update data ", subCategory);
+        res.status(200).send(response);
+    }catch(err :any){
+        res.status(500).send(err.message);
+    }
+    
+})
+
 export default router;
