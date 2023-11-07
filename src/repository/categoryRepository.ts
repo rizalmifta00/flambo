@@ -2,7 +2,11 @@ import prisma from '../db'
 
 
 export const findCategory = async ()=>{
-    const category = await prisma.categories.findMany();
+    const category = await prisma.categories.findMany({
+            include : {
+                sub_category : true,
+            }
+    });
     return category;
 }
 

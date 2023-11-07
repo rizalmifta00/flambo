@@ -19,8 +19,12 @@ export const createSubCategory = async (subCategoryData:any) => {
     const subCategory = await prisma.sub_category.create({
         data :{
             id : uuidv4(),
-            categoryId : subCategoryData.categoryId,
-            name : subCategoryData.name
+            name : subCategoryData.name,
+            category:{
+                connect : {
+                    id: subCategoryData.categoryId
+                }
+            }
         },
     });
     return subCategory;

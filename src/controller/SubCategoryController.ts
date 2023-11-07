@@ -24,4 +24,16 @@ router.get("/:id",async (req:Request,res:Response) => {
     }
 })
 
+router.post("/",async (req:Request,res:Response) => {
+    try{
+        const data = req.body;
+        const subCategory = await subCategoryService.createSubCategory(data);
+        const response = createSuccesfull("success","success create data", subCategory);
+        res.status(200).send(response);
+    }catch(err : any){
+        res.status(400).send(err.message);
+    }
+    
+})
+
 export default router;
