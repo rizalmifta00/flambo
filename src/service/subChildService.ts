@@ -27,3 +27,20 @@ export const createSubChild =async (subChildData:any) => {
         }
     });
 }
+
+export const updateSubChild =async (id:string, subChildData : any) => {
+    const subChild = await prisma.sub_child.update({
+        where : {
+            id : id,
+        },
+        data : {
+            name : subChildData.name,
+            sub_category : {
+                connect : {
+                    id : subChildData.subCategoryId,
+                }
+            }
+        },
+    });
+    
+}

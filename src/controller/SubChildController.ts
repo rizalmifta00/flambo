@@ -24,6 +24,17 @@ router.get("/:id",async (req:Request,res:Response) => {
         res.status(500).send(err.message);
     }
 });
+router.post("/",async (req:Request,res:Response) => {
+    try{
+        const data = req.body;
+        const subChild = await subChildService.createSubChild(data);
+        const response = createSuccesfull("success","success create data", subChild);
+        res.status(200).send(response);
+    }catch(err : any){
+        res.status(500).send(err.message);
+    }
+    
+})
 
 export default router
 
