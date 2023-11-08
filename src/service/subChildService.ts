@@ -42,5 +42,12 @@ export const updateSubChild =async (id:string, subChildData : any) => {
             }
         },
     });
-    
+}
+
+export const deleteSubChild =  async (id:string) => {
+    const subChild = await prisma.sub_child.delete({
+        where : {
+            id: id,
+        },
+    });
 }

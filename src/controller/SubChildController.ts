@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { response } from 'express'
 import type { Request,Response } from 'express';
 import * as subChildService from "../service/subChildService"
 import { createSuccesfull } from './BaseResponse';
@@ -34,6 +34,27 @@ router.post("/",async (req:Request,res:Response) => {
         res.status(500).send(err.message);
     }
     
+})
+router.put("/:id",async (req:Request,res:Response) => {
+    try{
+        const id = req.params.id;
+        const data = req.body;
+        const suChild = await subChildService.updateSubChild(id,data)
+        const response = createSuccesfull("success","success update data",suChild);
+        res.status(200).send(response);
+    }catch(err:any){
+        res.status(500).send(err.message);
+    }
+})
+router.delete("/:id",async (req:Request,res:Response) => {
+    try{
+        const id = req.params.id;
+        const subChild = await subChildService.deleteSubChild(id);
+        const response = createSuccesfull("success","success delete data",subChild)
+        res.status(200).send(response);
+    }catch(err : any){
+        res.status(500).send(err.message);
+    }
 })
 
 export default router
