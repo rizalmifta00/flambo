@@ -2,6 +2,7 @@ import express from 'express'
 import type { Request,Response } from 'express';
 import * as categoryService from "../service/categoryService";
 import { createSuccesfull } from './BaseResponse';
+import {validateCategory}  from '../validation/categoryValidation';
 const router = express.Router();
 
 router.get("/",async (req:Request,res:Response) => {
@@ -29,6 +30,11 @@ router.get("/:id",async(req:Request,res:Response)=>{
 
 router.post("/create",async (req:Request,res:Response) => {
     try{
+        const {error} = validateCategory(req.body);
+        if(error){
+            return res.status(400).send(error.details[0].message);
+            
+        }
         const newCategory = req.body;
         console.log(newCategory);
         const category = await categoryService.createCategory(newCategory);
@@ -41,6 +47,11 @@ router.post("/create",async (req:Request,res:Response) => {
 
 router.put("/:id",async(req:Request,res:Response)=>{
    try{
+    const {error} = validateCategory(req.body);
+    if(error){
+        return res.status(400).send(error.details[0].message);
+        
+    }
     const categoryId = req.params.id;
     const categoryData = req.body;
     const category = await categoryService.updateCategory(categoryId,categoryData);
