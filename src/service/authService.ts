@@ -2,6 +2,9 @@ import { v4 as uuidv4 } from 'uuid';
 import * as authRepository from '../repository/authRepository'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { Role } from '@prisma/client';
+
+
 
 export const login =async (email:string,password:string) => {
     const account =  await authRepository.findByAccoundEmail(email);
@@ -35,4 +38,18 @@ export const login =async (email:string,password:string) => {
         token : token
     }
     }
+}
+
+export const signUp =async (data : authRepository.signUpInput) => {
+    const modifiedData :authRepository.signUpInput = {
+        ...data,
+        isActive : data.isActive ?? false,
+        role : data.role || 'CUSTOMER'
+    }
+    const hashedPassword = await bcrypt.hash(modifiedData.password,10);
+    modifiedData.password = hashedPassword;
+    const createAccount = await authRepository.signUp(modifiedData);
+    return createAccount;
+
+    
 }
