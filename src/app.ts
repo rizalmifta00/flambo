@@ -12,10 +12,12 @@ app.get('/', (req:Request, res:Response) => {
 import categoryController from './controller/CategoryController'
 import subCategoryController from './controller/SubCategoryController'
 import subChildController from './controller/SubChildController'
+import authController from './controller/AuthController'
 
 app.use("/category",categoryController);
 app.use("/subcategory",subCategoryController);
 app.use("/subChild",subChildController);
+app.use("/",authController);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

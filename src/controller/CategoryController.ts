@@ -3,13 +3,15 @@ import type { Request,Response } from 'express';
 import * as categoryService from "../service/categoryService";
 import { createSuccesfull } from './BaseResponse';
 import {validateCategory}  from '../validation/categoryValidation';
+import { checkAuthenticationAndRole} from '../middleware/auth'
 const router = express.Router();
 
-router.get("/",async (req:Request,res:Response) => {
+router.get("/",checkAuthenticationAndRole,async (req:Request,res:Response) => {
     try{
         const categories = await categoryService.getAllCategory();
         const response = createSuccesfull("success","success get data",categories)
         res.status(200).send(response);
+        
 
     } catch(err : any) {
         res.status(400).send(err.message);
