@@ -11,6 +11,7 @@ router.get("/",checkAuthenticationAndRole,async (req:Request,res:Response) => {
         const categories = await categoryService.getAllCategory();
         const response = createSuccesfull("success","success get data",categories)
         res.status(200).send(response);
+        
 
     } catch(err : any) {
         res.status(400).send(err.message);

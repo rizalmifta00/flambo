@@ -7,6 +7,7 @@ export interface DecodedToken {
     id: string;
     email: string;
     role: string;
+    isActive : string
 }
 
 
@@ -19,6 +20,7 @@ export const checkAuthenticationAndRole = async(req:Request,res:Response,next:Ne
 
     try{
         const decodedToken = jwt.verify(token,process.env.JWT_SECRET!) as DecodedToken;
+    
         const accountRole = decodedToken.role;
         
         const isCustomer = decodedToken.role === 'CUSTOMER';
