@@ -51,5 +51,4 @@ export const signUp =async (data : authRepository.signUpInput) => {
     const createAccount = await authRepository.signUp(modifiedData);
     return createAccount;
 
-    
 }
