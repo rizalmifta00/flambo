@@ -14,4 +14,15 @@ router.get('/',async (req:Request,res:Response) => {
     }
     
 })
+router.get('/:id',async (req:Request,res:Response) => {
+    try{
+        const id = req.params.id;
+        const brand = await brandService.getBrandById(id);
+        const response = createSuccesfull("success get data","success",brand);
+        res.status(200).send(response);
+    }catch(err:any){
+        res.status(400).send(err.message);
+    }
+    
+})
 export default router;
