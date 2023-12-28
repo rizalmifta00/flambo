@@ -12,7 +12,9 @@ export const findByAccoundEmail =async (email:string) => {
     const account = await prisma.accounts.findUnique({
         where : {
             email,
-        },
+        },include : {
+            user : true
+        }
     })
     if(!account){
         throw Error("Account not found")
