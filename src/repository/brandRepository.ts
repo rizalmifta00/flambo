@@ -12,7 +12,7 @@ export const getBrandById =async (id:string) => {
     const brand = await prisma.brand.findUnique({
         where:{
             id
-        }
+        }   
     })
     return brand;
     
