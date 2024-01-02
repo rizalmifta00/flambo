@@ -2,7 +2,8 @@ import prisma from '../db';
 import * as brandRepository from '../repository/brandRepository'
 import { v4 as uuidv4 } from 'uuid';
 import { Request, Response } from 'express';
-import { handleFileUpload } from '../helper/multer';
+
+import * as fs from 'fs/promises';
 
 export const getAllBrand = async () => {
     const brand = await brandRepository.getAllBrand();
@@ -41,4 +42,49 @@ export const createBrand =async (brandData:any,uploadedFiles:any) => {
     return brand;
     
 }
+
+export const updateBrandWithImages = async (id: string, brandData: any, images: { logo: string | null; banner: string | null }): Promise<any> => {
+    try {
+      // Lakukan validasi atau operasi lain sesuai kebutuhan
+      const currentBrand = await prisma.brand.findUnique({
+        where: { id: id },
+      });
+      console.log(currentBrand);
+  
+      if (!currentBrand) {
+        throw new Error('Brand Not Found');
+      }
+  
+      // Hapus gambar lama jika ada dan gambar baru diunggah
+      const deleteFile = async (filename: string | null) => {
+        if (filename) {
+          try {
+            await fs.unlink(`images/${filename}`);
+            console.log(`Deleted file: ${filename}`);
+          } catch (error) {
+            // Handle the error here (e.g., log it)
+            console.error(`Error deleting file ${filename}:`, error);
+          }
+        }
+      };
+
+      await deleteFile(currentBrand.logo);
+      await deleteFile(currentBrand.banner);
+  
+      const updatedBrand = await prisma.brand.update({
+        where: { id: id },
+        data: {
+          name: brandData.name,
+          description: brandData.description,
+          logo: images.logo!,
+          banner: images.banner!,
+        },
+      });
+  
+      return updatedBrand;
+    } catch (error) {
+      throw new Error('Error updating brand with images');
+    }
+  };
+
 

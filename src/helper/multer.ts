@@ -27,7 +27,4 @@ const imageFilter = (req: any, file : any, cb: any) => {
     }
 };
 
-const multerUpload = multer({ storage: storage, fileFilter: imageFilter });
-export const handleFileUpload = (fields: { name: string; maxCount: number }[]): RequestHandler => {
-    return multerUpload.fields(fields);
-  };
+export const upload = multer({ storage: storage, fileFilter: imageFilter });
