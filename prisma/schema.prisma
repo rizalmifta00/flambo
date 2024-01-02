@@ -63,5 +63,39 @@ model sub_child{
   subCategoryId String
   sub_category sub_category @relation(fields: [subCategoryId],references:[id])
   name String
+  product product[]
 
+}
+
+model brand {
+  id String @id @default(uuid())
+  name String
+  description String
+  logo String
+  banner String
+  product product[]
+
+}
+
+model product {
+  id String @id @default(uuid())
+  brandId String
+  brand brand @relation(fields: [brandId],references: [id])
+  subChildId String
+  sub_child sub_child @relation(fields: [subChildId],references: [id])
+  name String
+  productImages ProductImage[]    
+}
+model ProductImage {
+ id         String @id @default(uuid())
+ productId String
+ product    product @relation(fields: [productId], references: [id])
+ imageId    String
+ image      Image   @relation(fields: [imageId], references: [id])
+}
+
+model Image {
+ id          String @id @default(uuid())
+ url         String
+ productImages ProductImage[] // added this line
 }
