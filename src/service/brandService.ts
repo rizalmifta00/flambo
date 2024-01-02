@@ -87,4 +87,45 @@ export const updateBrandWithImages = async (id: string, brandData: any, images: 
     }
   };
 
+  export const deleteBrand =async (id:string) => {
+    try{
+
+    
+    const currentBrand = await prisma.brand.findUnique({
+      where: { id: id },
+    });
+    console.log(currentBrand);
+
+    if (!currentBrand) {
+      throw new Error('Brand Not Found');
+    }
+
+    // Hapus gambar lama jika ada dan gambar baru diunggah
+    const deleteFile = async (filename: string | null) => {
+      if (filename) {
+        try {
+          await fs.unlink(`images/${filename}`);
+          console.log(`Deleted file: ${filename}`);
+        } catch (error) {
+          // Handle the error here (e.g., log it)
+          console.error(`Error deleting file ${filename}:`, error);
+        }
+      }
+    };
+
+    await deleteFile(currentBrand.logo);
+    await deleteFile(currentBrand.banner);
+
+    const brand = await prisma.brand.delete({
+      where: {
+        id : id,
+      }
+    })
+    return brand;
+  }catch(err:any){
+    throw new Error ("error delete brand")
+  }
+    
+  }
+
 
