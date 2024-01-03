@@ -60,5 +60,16 @@ router.put('/:id',upload.fields([{name:'logo',maxCount:1},{name:'banner',maxCoun
         res.status(500).send("Internal Server Error");
     }
     
+});
+router.delete("/:id",async (req:Request,res:Response) => {
+    try{  
+    const brandId = req.params.id;
+    const brand = await brandService.deleteBrand(brandId);
+    const response = createSuccesfull("succes","success delete data",brand);
+    res.status(200).send(response);
+    }catch(err:any){
+        res.status(500).send(err.message);
+    }
+    
 })
 export default router;
