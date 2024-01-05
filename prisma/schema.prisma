@@ -12,7 +12,7 @@ datasource db {
 model Accounts {
   id  String @id @default(uuid())
   email  String @unique
-  password String
+  password String?
   role Role
   isActive Boolean
   user   User?  

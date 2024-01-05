@@ -13,7 +13,7 @@
             throw new Error("Account not found")
         }
 
-        const isPasswordValid = await bcrypt.compare(password,account.password);
+        const isPasswordValid = await bcrypt.compare(password,account.password!);
         
         if(!isPasswordValid){
         throw new Error ("Wrong Password")
