@@ -24,6 +24,7 @@ export const createSubChild =async (subChildData:any) => {
                     id : subChildData.subCategoryId,
                 }
             },
+            
         }
     });
 }
