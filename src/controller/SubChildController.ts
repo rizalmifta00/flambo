@@ -27,6 +27,7 @@ router.get("/:id",async (req:Request,res:Response) => {
 router.post("/",async (req:Request,res:Response) => {
     try{
         const data = req.body;
+        console.log(data);
         const subChild = await subChildService.createSubChild(data);
         const response = createSuccesfull("success","success create data", subChild);
         res.status(200).send(response);

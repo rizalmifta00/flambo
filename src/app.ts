@@ -17,14 +17,16 @@ import subChildController from './controller/SubChildController'
 import authController from './controller/AuthController'
 import userController from './controller/UserController'
 import brandController from './controller/BrandController'
+import productController from './controller/ProductController'
 
 
 app.use("/category",categoryController);
 app.use("/subcategory",subCategoryController);
-app.use("/subChild",subChildController);
+app.use("/subchild",subChildController);
 app.use("/",authController);
 app.use("/",userController);
 app.use("/brand",brandController);
+app.use("/product",productController);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
