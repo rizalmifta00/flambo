@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { response } from 'express'
 import type { Request,Response } from 'express';
 import * as productService from '../service/productService'
 import { createSuccesfull } from './BaseResponse';
@@ -7,6 +7,16 @@ import { upload } from '../helper/multer';
 const router = express.Router();
 
 
+router.get('/',async (req:Request,res:Response) => {
+    try{
+    const product = await productService.getAllProduct();
+    const response = createSuccesfull("success get all product", "success", product);
+    res.status(200).send(response);
+    }catch(err:any){
+        res.status(500).send(err.message);
+    }
+    
+})
 router.post('/',upload.fields([{name:'image',maxCount:5}]),async (req:Request,res:Response) => {
     try{
         const newProduct = req.body;

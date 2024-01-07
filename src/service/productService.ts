@@ -1,8 +1,14 @@
 import prisma from '../db';
-import * as brandRepository from '../repository/brandRepository'
+import * as productRepository from '../repository/productRepository'
 import { v4 as uuidv4 } from 'uuid';
 import { Request, Response } from 'express';
 
+
+export const getAllProduct =async () => {
+    const product = await productRepository.getAllProduct();
+    return product;
+    
+}
 export const createProduct =async (productData : any,uploadedFiles:any) => {
     try{
         
