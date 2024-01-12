@@ -9,9 +9,21 @@ const router = express.Router();
 
 router.get('/',async (req:Request,res:Response) => {
     try{
-    const product = await productService.getAllProduct();
+    const queryParams = req.query;
+    const product = await productService.getAllProduct(queryParams);
     const response = createSuccesfull("success get all product", "success", product);
     res.status(200).send(response);
+    }catch(err:any){
+        res.status(500).send(err.message);
+    }
+    
+})
+router.get('/:id',async (req:Request,res:Response) => {
+    const  productId = req.params.id;
+    try{
+        const product = await productService.getProductById(productId);
+        const response =createSuccesfull(`success get product by id ${productId}`,'success',product );
+        res.status(200).send(response);
     }catch(err:any){
         res.status(500).send(err.message);
     }

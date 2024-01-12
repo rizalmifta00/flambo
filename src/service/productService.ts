@@ -4,8 +4,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { Request, Response } from 'express';
 
 
-export const getAllProduct =async () => {
-    const product = await productRepository.getAllProduct();
+export const getAllProduct =async (queryParams: any) => {
+    const product = await productRepository.getAllProduct(queryParams);
+    return product;
+    
+}
+export const getProductById =async (id:string) => {
+    const product = await productRepository.getProductById(id);
     return product;
     
 }
@@ -52,7 +57,7 @@ export const createProduct =async (productData : any,uploadedFiles:any) => {
         return {images,product};
         
     }catch (err:any){
-        throw new Error ("erro create product")
+        throw new Error ("error create product")
     };
     
 }
